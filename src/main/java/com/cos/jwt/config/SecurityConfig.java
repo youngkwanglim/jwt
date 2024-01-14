@@ -24,9 +24,9 @@ import org.springframework.web.filter.CorsFilter;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    //private final CorsFilter corsFilter;
+    private final CorsFilter corsFilter;
     private final UserRepository userRepository;
-    private final CorsConfig corsConfig;
+    //private final CorsConfig corsConfig;
 
     @Bean
     SecurityFilterChain filerChain(HttpSecurity http) throws Exception {
@@ -58,7 +58,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity http) throws Exception {
             AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
             http
-                    .addFilter(corsConfig.corsFilter())
+                    .addFilter(corsFilter) // @CrossOrigin(인증x), 시큐리티 필터에 등록 인증(O)
                     .addFilter(new JwtAuthenticationFilter(authenticationManager))
                     .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository));
         }
