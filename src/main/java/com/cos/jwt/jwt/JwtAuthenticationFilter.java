@@ -30,12 +30,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         System.out.println("JwtAuthenticationFilter : 로그인 시도 중");
 
         try {
-//            BufferedReader br = request.getReader();
-//
-//            String input = null;
-//            while ((input = br.readLine()) != null) {
-//                System.out.println(input);
-//            }
+
             ObjectMapper om = new ObjectMapper();
             User user = om.readValue(request.getInputStream(), User.class);
             System.out.println(user);
@@ -78,6 +73,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withClaim("username", principalDetails.getUser().getUsername())
                 .sign(Algorithm.HMAC512("cos"));
 
-        response.addHeader("Authorization", "Bearear " + jwtToken);
+        response.addHeader("Authorization", "Bearer " + jwtToken);
     }
 }
